@@ -1,5 +1,5 @@
 {
-    "name": "michelecapicchioni/capim-plugin-wp",
+    "name": "capimichi/capim-plugin-wp",
     "description": "The core for the use of controllers for actions, filters, ecc.",
     "require": {
         "twig/twig": "^2.3",
