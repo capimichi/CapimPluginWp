@@ -1,0 +1,25 @@
+{
+    "name": "michelecapicchioni/capim-plugin-wp",
+    "description": "The core for the use of controllers for actions, filters, ecc.",
+    "require": {
+        "twig/twig": "^2.3",
+        "doctrine/annotations": "^1.4",
+        "symfony/finder": "^3.2"
+    },
+    "require-dev": {
+        "twig/twig": "^2.3",
+        "doctrine/annotations": "^1.4",
+        "symfony/finder": "^3.2"
+    },
+    "authors": [
+        {
+            "name": "Michele Capicchioni",
+            "email": "capimichi@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "CapimPluginWP": "src/"
+        }
+    }
+}
