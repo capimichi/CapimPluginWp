@@ -1,5 +1,5 @@
 <?php
-namespace Annotations;
+namespace CapimPluginWP\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 
@@ -7,20 +7,20 @@ use Doctrine\Common\Annotations\Annotation;
  * @Annotation
  * @Target("METHOD")
  */
-final class CMThemePage extends Annotation {
+final class Ajax extends Annotation {
+
     /**
      * @var string
      */
     public $name;
 
     /**
-     * @var string
+     * @var bool
      */
-    public $capability;
+    public $public = true;
 
     /**
-     * @var array|string|null
+     * @var bool
      */
-    public $js = null;
-
+    public $admin = true;
 }

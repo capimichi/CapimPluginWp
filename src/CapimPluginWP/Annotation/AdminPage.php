@@ -1,5 +1,5 @@
 <?php
-namespace Annotations;
+namespace CapimPluginWP\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 
@@ -7,7 +7,7 @@ use Doctrine\Common\Annotations\Annotation;
  * @Annotation
  * @Target("METHOD")
  */
-final class CMAdminPage extends Annotation {
+final class AdminPage extends Annotation {
     /**
      * @var string
      */

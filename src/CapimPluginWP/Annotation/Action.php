@@ -1,13 +1,11 @@
 <?php
 namespace CapimPluginWP\Annotation;
 
-use CapimPluginWP\Annotation;
-
 /**
  * @Annotation
  * @Target("METHOD")
  */
-final class CMAction extends Annotation {
+final class Action extends Annotation {
     /**
      * @var string|array
      */
