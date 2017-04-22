@@ -23,9 +23,19 @@ class Kernel
     protected $pluginFile;
 
     /**
+     * @var string|bool
+     */
+    protected $twigCacheDir;
+
+    /**
      * @var string|null
      */
-    protected $cacheDir;
+    protected $annotationCacheDir;
+
+    /**
+     * @var string|null
+     */
+    protected $cmdbCacheDir;
 
     /**
      * @var array
@@ -34,16 +44,20 @@ class Kernel
 
     /**
      * Kernel constructor.
-     * @param string $templateDir
+     * @param $templateDir
      * @param null $pluginFile
-     * @param null $cacheDir
      * @param array $controllerDirectories
+     * @param null|bool $twigCacheDir
+     * @param null|string $annotationCacheDir
+     * @param null|string $cmdbCacheDir
      */
-    public function __construct($templateDir, $pluginFile = null, $cacheDir = null, $controllerDirectories = array())
+    public function __construct($templateDir, $pluginFile = null, $controllerDirectories = array(), $twigCacheDir = false, $annotationCacheDir = null, $cmdbCacheDir = null)
     {
         $this->templateDir = $templateDir;
         $this->pluginFile = $pluginFile;
-        $this->cacheDir = rtrim($cacheDir, "/") . "/";
+        $this->twigCacheDir = rtrim($twigCacheDir, "/") . "/";
+        $this->annotationCacheDir = rtrim($annotationCacheDir, "/") . "/";
+        $this->cmdbCacheDir = rtrim($cmdbCacheDir, "/") . "/";
         $this->controllerDirectories = $controllerDirectories;
         $this->controllerDirectories[] = dirname(__FILE__) . "/Controller";
         $this->loadFiles();
@@ -86,8 +100,8 @@ class Kernel
      */
     protected function loadAnnotations()
     {
-        if ($this->cacheDir) {
-            $reader = new FileCacheReader(new AnnotationReader(), $this->cacheDir . "annotations/");
+        if ($this->annotationCacheDir) {
+            $reader = new FileCacheReader(new AnnotationReader(), $this->annotationCacheDir);
         } else {
             $reader = new AnnotationReader();
         }
@@ -98,12 +112,12 @@ class Kernel
                 $phpFileManager = new PhpFileManager($file);
                 $className = $phpFileManager->getClassName();
                 $twig = new Twig_Environment(new Twig_Loader_Filesystem($this->templateDir), array(
-                    'cache' => $this->cacheDir ? $this->cacheDir . "twig/" : false,
+                    'cache' => $this->twigCacheDir,
                 ));
                 if(function_exists("admin_url")) {
                     $twig->addGlobal("ajaxUrl", admin_url('admin-ajax.php'));
                 }
-                $persistenceManager = new PersistenceManager($this->cacheDir ? $this->cacheDir . "cmdb/" : false);
+                $persistenceManager = new PersistenceManager($this->cmdbCacheDir);
                 $class = new $className($twig, $persistenceManager);
                 $methods = get_class_methods($class);
                 foreach ($methods as $method) {
