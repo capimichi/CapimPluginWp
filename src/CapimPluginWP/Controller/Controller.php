@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace CapimPluginWP\Controller;
 
 use CapimPluginWP\PersistenceManager;
 use Twig_Environment;
