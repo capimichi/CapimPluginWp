@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use CapimPluginWP\PersistenceManager;
 use Twig_Environment;
 
 abstract class Controller
@@ -12,14 +13,14 @@ abstract class Controller
     private $twig;
 
     /**
-     * @var CMDbHelper
+     * @var PersistenceManager
      */
-    private $dbHelper;
+    private $persistenceManager;
 
-    public function __construct($twig, $dbHelper)
+    public function __construct($twig, $persistenceManager)
     {
         $this->twig = $twig;
-        $this->dbHelper = $dbHelper;
+        $this->persistenceManager = $persistenceManager;
     }
 
     /**
@@ -34,9 +35,9 @@ abstract class Controller
     }
 
     /**
-     * @return CMDbHelper
+     * @return PersistenceManager
      */
-    protected function getDbHelper(){
-        return $this->dbHelper;
+    protected function getPersistenceManager(){
+        return $this->persistenceManager;
     }
 }
