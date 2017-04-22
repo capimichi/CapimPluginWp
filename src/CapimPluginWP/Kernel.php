@@ -42,6 +42,18 @@ class Kernel
     }
 
     /**
+     * On plugin activation
+     */
+    protected function loadActivation()
+    {
+        if(function_exists("register_activation_hook")){
+            if($this->pluginFile) {
+                register_activation_hook($this->pluginFile, array(new Activation(), "load"));
+            }
+        }
+    }
+
+    /**
      * Require files
      */
     protected function loadFiles()
@@ -66,7 +78,7 @@ class Kernel
      */
     protected function loadAnnotations()
     {
-        if($this->cacheDir){
+        if ($this->cacheDir) {
             $reader = new FileCacheReader(new AnnotationReader(), $this->cacheDir . "annotations/");
         } else {
             $reader = new AnnotationReader();
