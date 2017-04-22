@@ -68,13 +68,13 @@ class Kernel
     protected function loadFiles()
     {
         $loaders = array(
-            dirname(__FILE__) . "/Annotations/CMAction.php",
-            dirname(__FILE__) . "/Annotations/CMAdminPage.php",
-            dirname(__FILE__) . "/Annotations/CMAjax.php",
-            dirname(__FILE__) . "/Annotations/CMFilter.php",
-            dirname(__FILE__) . "/Annotations/CMShortcode.php",
-            dirname(__FILE__) . "/Annotations/CMThemePage.php",
-            dirname(__FILE__) . "/Annotations/CMMetabox.php",
+            dirname(__FILE__) . "/Annotation/Action.php",
+            dirname(__FILE__) . "/Annotation/AdminPage.php",
+            dirname(__FILE__) . "/Annotation/Ajax.php",
+            dirname(__FILE__) . "/Annotation/Filter.php",
+            dirname(__FILE__) . "/Annotation/Shortcode.php",
+            dirname(__FILE__) . "/Annotation/ThemePage.php",
+            dirname(__FILE__) . "/Annotation/Metabox.php",
         );
         foreach ($loaders as $loader) {
             require $loader;
