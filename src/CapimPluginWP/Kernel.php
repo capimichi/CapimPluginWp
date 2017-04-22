@@ -68,7 +68,7 @@ class Kernel
     protected function loadFiles()
     {
         $loaders = array(
-            dirname(dirname(__FILE__)) . "/vendor/autoload.php",
+            dirname(dirname(dirname(__FILE__))) . "/vendor/autoload.php",
             dirname(__FILE__) . "/Annotations/CMAction.php",
             dirname(__FILE__) . "/Annotations/CMAdminPage.php",
             dirname(__FILE__) . "/Annotations/CMAjax.php",
