@@ -6,9 +6,16 @@ use Doctrine\Common\Annotations\FileCacheReader;
 use ReflectionMethod;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 class Kernel
 {
+
+    /**
+     * @var string
+     */
+    protected $templateDir;
 
     /**
      * @var string|null
@@ -27,12 +34,14 @@ class Kernel
 
     /**
      * Kernel constructor.
+     * @param string $templateDir
      * @param null $pluginFile
      * @param null $cacheDir
      * @param array $controllerDirectories
      */
-    public function __construct($pluginFile = null, $cacheDir = null, $controllerDirectories = array())
+    public function __construct($templateDir, $pluginFile = null, $cacheDir = null, $controllerDirectories = array())
     {
+        $this->templateDir = $templateDir;
         $this->pluginFile = $pluginFile;
         $this->cacheDir = rtrim($cacheDir, "/") . "/";
         $this->controllerDirectories = $controllerDirectories;
@@ -74,7 +83,7 @@ class Kernel
     }
 
     /**
-     * Laod annotations
+     * Load annotations
      */
     protected function loadAnnotations()
     {
@@ -89,7 +98,14 @@ class Kernel
             foreach ($files as $file) {
                 $phpFileManager = new PhpFileManager($file);
                 $className = $phpFileManager->getClassName();
-                $class = new $className();
+                $twig = new Twig_Environment(new Twig_Loader_Filesystem($this->templateDir), array(
+                    'cache' => $this->cacheDir ? $this->cacheDir . "twig/" : false,
+                ));
+                if(function_exists("admin_url")) {
+                    $twig->addGlobal("ajaxUrl", admin_url('admin-ajax.php'));
+                }
+                $persistenceManager = new PersistenceManager($this->cacheDir ? $this->cacheDir . "cmdb/" : false);
+                $class = new $className($twig, $persistenceManager);
                 $methods = get_class_methods($class);
                 foreach ($methods as $method) {
                     $reflMethod = new ReflectionMethod($class, $method);
