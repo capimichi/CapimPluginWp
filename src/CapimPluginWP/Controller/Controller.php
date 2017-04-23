@@ -1,6 +1,7 @@
 <?php
 namespace CapimPluginWP\Controller;
 
+use CapimPluginWP\AssetManager;
 use CapimPluginWP\PersistenceManager;
 use Twig_Environment;
 
@@ -16,6 +17,11 @@ abstract class Controller
      * @var PersistenceManager
      */
     private $persistenceManager;
+
+    /**
+     * @var AssetManager
+     */
+    private $assetManager;
 
     public function __construct($twig, $persistenceManager)
     {
@@ -40,4 +46,13 @@ abstract class Controller
     protected function getPersistenceManager(){
         return $this->persistenceManager;
     }
+
+    /**
+     * @return AssetManager
+     */
+    protected function getAssetManager()
+    {
+        return $this->assetManager;
+    }
+
 }
