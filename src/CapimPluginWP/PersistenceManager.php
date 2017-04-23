@@ -11,7 +11,7 @@ class PersistenceManager
     protected $cacheDir;
 
     /**
-     * DbHelper constructor.
+     * PersistenceManager constructor.
      * @param null|string $cacheDir
      */
     public function __construct($cacheDir = null)
