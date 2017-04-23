@@ -8,6 +8,11 @@ use CapimPluginWP\Annotation\Filter;
 use CapimPluginWP\Annotation\Metabox;
 use CapimPluginWP\Annotation\Shortcode;
 use CapimPluginWP\Annotation\ThemePage;
+use CapimPluginWP\WP\WPAdminPage;
+use CapimPluginWP\WP\WPAjax;
+use CapimPluginWP\WP\WPMetabox;
+use CapimPluginWP\WP\WPShortcode;
+use CapimPluginWP\WP\WPThemePage;
 use Doctrine\Common\Annotations\Annotation;
 
 class AnnotationManager{
@@ -28,7 +33,7 @@ class AnnotationManager{
                 $this->addFilter($annotation->hook, $callable);
                 break;
             case $annotation instanceof AdminPage:
-                $adminPage = new CMWpAdminPage(
+                $adminPage = new WPAdminPage(
                     $annotation->name,
                     $annotation->capability,
                     $callable,
@@ -39,15 +44,15 @@ class AnnotationManager{
                 $this->addAdminPage($adminPage);
                 break;
             case $annotation instanceof Shortcode:
-                $shortcode = new CMWpShortcode($annotation->name, $callable);
+                $shortcode = new WPShortcode($annotation->name, $callable);
                 $this->addShortcode($shortcode);
                 break;
             case $annotation instanceof Ajax:
-                $ajax = new CMWpAjax($annotation->name, $callable, $annotation->public, $annotation->admin);
+                $ajax = new WPAjax($annotation->name, $callable, $annotation->public, $annotation->admin);
                 $this->addAjax($ajax);
                 break;
             case $annotation instanceof ThemePage:
-                $themePage = new CMWpThemePage(
+                $themePage = new WPThemePage(
                     $annotation->name,
                     $annotation->capability,
                     $callable
@@ -55,7 +60,7 @@ class AnnotationManager{
                 $this->addThemePage($themePage);
                 break;
             case $annotation instanceof Metabox:
-                $metabox = new CMWpMetabox($annotation->name, $callable, $annotation->screen, $annotation->context, $annotation->priority, $annotation->form);
+                $metabox = new WPMetabox($annotation->name, $callable, $annotation->screen, $annotation->context, $annotation->priority, $annotation->form);
                 $this->addMetabox($metabox);
                 break;
         }
@@ -90,7 +95,7 @@ class AnnotationManager{
     }
 
     /**
-     * @param CMWpAdminPage $adminPage
+     * @param WPAdminPage $adminPage
      */
     public function addAdminPage($adminPage)
     {
@@ -98,7 +103,7 @@ class AnnotationManager{
     }
 
     /**
-     * @param CMWpThemePage $themePage
+     * @param WPThemePage $themePage
      */
     public function addThemePage($themePage)
     {
@@ -106,7 +111,7 @@ class AnnotationManager{
     }
 
     /**
-     * @param CMWpShortcode $shortcode
+     * @param WPShortcode $shortcode
      */
     public function addShortcode($shortcode)
     {
@@ -114,7 +119,7 @@ class AnnotationManager{
     }
 
     /**
-     * @param CMWpAjax $ajax
+     * @param WPAjax $ajax
      */
     public function addAjax($ajax)
     {
@@ -122,7 +127,7 @@ class AnnotationManager{
     }
 
     /**
-     * @param CMWpMetabox $metabox
+     * @param WPMetabox $metabox
      */
     public function addMetabox($metabox)
     {
