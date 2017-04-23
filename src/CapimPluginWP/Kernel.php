@@ -59,7 +59,6 @@ class Kernel
         $this->annotationCacheDir = rtrim($annotationCacheDir, "/") . "/";
         $this->cmdbCacheDir = rtrim($cmdbCacheDir, "/") . "/";
         $this->controllerDirectories = $controllerDirectories;
-        $this->controllerDirectories[] = dirname(__FILE__) . "/Controller";
         $this->loadFiles();
         $this->loadAnnotations();
     }
