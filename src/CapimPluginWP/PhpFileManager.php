@@ -31,9 +31,10 @@ class PhpFileManager{
      * @return string
      */
     public function getNamespace(){
-        $namespace = "";
         if(preg_match("/namespace(.*?);/is", $this->file->getContents(), $namespace)){
             $namespace = rtrim(trim($namespace[1]), "\\") . "\\";
+        } else {
+            $namespace = "";
         }
         return $namespace;
     }
