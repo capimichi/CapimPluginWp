@@ -55,9 +55,9 @@ class Kernel
     {
         $this->templateDir = $templateDir;
         $this->pluginFile = $pluginFile;
-        $this->twigCacheDir = rtrim($twigCacheDir, "/") . "/";
-        $this->annotationCacheDir = rtrim($annotationCacheDir, "/") . "/";
-        $this->cmdbCacheDir = rtrim($cmdbCacheDir, "/") . "/";
+        $this->twigCacheDir = $twigCacheDir ? rtrim($twigCacheDir, "/") . "/" : $twigCacheDir;
+        $this->annotationCacheDir = $annotationCacheDir ? rtrim($annotationCacheDir, "/") . "/" : $annotationCacheDir;
+        $this->cmdbCacheDir = $cmdbCacheDir ? rtrim($cmdbCacheDir, "/") . "/" : $cmdbCacheDir;
         $this->controllerDirectories = $controllerDirectories;
         $this->loadFiles();
         $this->loadAnnotations();

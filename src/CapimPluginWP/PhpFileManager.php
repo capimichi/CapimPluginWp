@@ -17,6 +17,7 @@ class PhpFileManager{
      */
     public function __construct($file)
     {
+        require_once $file;
         $this->file = $file;
     }
 
@@ -31,7 +32,7 @@ class PhpFileManager{
      * @return string
      */
     public function getNamespace(){
-        if(preg_match("/namespace(.*?);/is", $this->file->getContents(), $namespace)){
+        if(preg_match("/gnamespace(.*?);/is", $this->file->getContents(), $namespace)){
             $namespace = rtrim(trim($namespace[1]), "\\") . "\\";
         } else {
             $namespace = "";
