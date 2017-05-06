@@ -8,6 +8,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Twig_Extension_Debug;
 
 class Kernel
 {
@@ -112,7 +113,11 @@ class Kernel
                 $className = $phpFileManager->getClassName();
                 $twig = new Twig_Environment(new Twig_Loader_Filesystem($this->templateDir), array(
                     'cache' => $this->twigCacheDir,
+                    'debug' => !$this->twigCacheDir
                 ));
+                if(!$this->twigCacheDir){
+                    $twig->addExtension(new Twig_Extension_Debug());
+                }
                 if(function_exists("admin_url")) {
                     $twig->addGlobal("ajaxUrl", admin_url('admin-ajax.php'));
                 }
