@@ -27,6 +27,7 @@ abstract class Controller
     {
         $this->twig = $twig;
         $this->persistenceManager = $persistenceManager;
+        $this->assetManager = new AssetManager();
     }
 
     /**
