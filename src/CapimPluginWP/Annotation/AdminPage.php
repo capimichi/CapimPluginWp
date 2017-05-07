@@ -32,11 +32,4 @@ final class AdminPage extends Annotation {
      * @var string|null
      */
     public $parent = null;
-
-    /**
-     * @var array|string|null
-     */
-    public $js = null;
-
-    public $attributes;
 }

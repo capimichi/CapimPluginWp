@@ -27,10 +27,10 @@ class AnnotationManager{
     {
         switch (true) {
             case $annotation instanceof Action:
-                $this->addAction($annotation->hook, $callable);
+                $this->addAction($annotation->hook, $callable, $annotation->priority, $annotation->args);
                 break;
             case $annotation instanceof Filter:
-                $this->addFilter($annotation->hook, $callable);
+                $this->addFilter($annotation->hook, $callable, $annotation->priority, $annotation->args);
                 break;
             case $annotation instanceof AdminPage:
                 $adminPage = new WPAdminPage(
@@ -70,13 +70,13 @@ class AnnotationManager{
      * @param $hook
      * @param callable $callable
      */
-    public function addAction($hook, callable $callable)
+    public function addAction($hook, callable $callable, $priority = 10, $args = 1)
     {
         if (!$hook) {
             $hook = "init";
         }
         if(function_exists("add_action")) {
-            add_action($hook, $callable);
+            add_action($hook, $callable, $priority, $args);
         }
     }
 
