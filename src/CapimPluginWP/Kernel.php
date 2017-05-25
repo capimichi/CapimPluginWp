@@ -119,11 +119,8 @@ class Kernel
                 if (!$this->twigCacheDir) {
                     $twig->addExtension(new Twig_Extension_Debug());
                 }
-                if (function_exists("admin_url")) {
-                    $twig->addGlobal("ajaxUrl", admin_url('admin-ajax.php'));
-                }
-                $function = new \Twig_SimpleFunction('wp_get_attachment_image_src', wp_get_attachment_image_src);
-                $twig->addFunction($function);
+                $twig = Twigmanager::addGlobals($twig);
+                $twig = Twigmanager::addFunctions($twig);
                 $persistenceManager = new PersistenceManager($this->cmdbCacheDir);
                 $class = new $className($twig, $persistenceManager);
                 $methods = get_class_methods($class);
