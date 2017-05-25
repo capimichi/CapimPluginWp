@@ -1,4 +1,5 @@
 <?php
+
 namespace CapimPluginWP;
 
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -69,8 +70,8 @@ class Kernel
      */
     protected function loadActivation()
     {
-        if(function_exists("register_activation_hook")){
-            if($this->pluginFile) {
+        if (function_exists("register_activation_hook")) {
+            if ($this->pluginFile) {
                 register_activation_hook($this->pluginFile, array(new Activation(), "load"));
             }
         }
@@ -113,14 +114,16 @@ class Kernel
                 $className = $phpFileManager->getClassName();
                 $twig = new Twig_Environment(new Twig_Loader_Filesystem($this->templateDir), array(
                     'cache' => $this->twigCacheDir,
-                    'debug' => !$this->twigCacheDir
+                    'debug' => !$this->twigCacheDir,
                 ));
-                if(!$this->twigCacheDir){
+                if (!$this->twigCacheDir) {
                     $twig->addExtension(new Twig_Extension_Debug());
                 }
-                if(function_exists("admin_url")) {
+                if (function_exists("admin_url")) {
                     $twig->addGlobal("ajaxUrl", admin_url('admin-ajax.php'));
                 }
+                $function = new \Twig_SimpleFunction('wp_get_attachment_image_src', wp_get_attachment_image_src);
+                $twig->addFunction($function);
                 $persistenceManager = new PersistenceManager($this->cmdbCacheDir);
                 $class = new $className($twig, $persistenceManager);
                 $methods = get_class_methods($class);
