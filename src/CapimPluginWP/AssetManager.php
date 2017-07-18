@@ -141,12 +141,9 @@ class AssetManager
     {
         if (function_exists("wp_register_script") && function_exists("wp_enqueue_script")) {
             foreach ($this->publicJsPaths as $publicJsPath) {
-                if (strpos($publicJsPath, '?') !== false) {
-                    $parsed = parse_url($publicJsPath);
-                    $name = str_replace("/", "-", $parsed["path"]);
-                    $name = ltrim($name, "-");
-                } else {
-                    $name = basename($publicJsPath);
+                $name = basename($publicJsPath);
+                if (strpos($name, '?') !== false) {
+                    $name = md5($name);
                 }
                 $name = "cm-{$name}";
                 wp_register_script($name, $publicJsPath, array(), false, true);
@@ -160,9 +157,9 @@ class AssetManager
      */
     public function enqueueLoginCss()
     {
-        foreach ($this->loginCssPaths as $loginCssPath) {
+        foreach ($this->publicCssPaths as $publicCssPath) {
             ?>
-            <link rel="stylesheet" href="<?php echo $loginCssPath; ?>"/>
+            <link rel="stylesheet" href="<?php echo $publicCssPath; ?>"/>
             <?php
         }
     }
@@ -173,16 +170,10 @@ class AssetManager
     public function enqueueLoginJs()
     {
         if (function_exists("wp_register_script") && function_exists("wp_enqueue_script")) {
-            foreach ($this->loginJsPaths as $loginJsPath) {
-                if (strpos($loginJsPath, '?') !== false) {
-                    $parsed = parse_url($loginJsPath);
-                    $name = str_replace("/", "-", $parsed["path"]);
-                    $name = ltrim($name, "-");
-                } else {
-                    $name = basename($loginJsPath);
-                }
+            foreach ($this->publicJsPaths as $publicJsPath) {
+                $name = basename($publicJsPath);
                 $name = "cm-{$name}";
-                wp_register_script($name, $loginJsPath, array(), false, true);
+                wp_register_script($name, $publicJsPath, array(), false, true);
                 wp_enqueue_script($name);
             }
         }
@@ -207,13 +198,7 @@ class AssetManager
     {
         if (function_exists("wp_register_script") && function_exists("wp_enqueue_script")) {
             foreach ($this->adminJsPaths as $adminJsPath) {
-                if (strpos($adminJsPath, '?') !== false) {
-                    $parsed = parse_url($adminJsPath);
-                    $name = str_replace("/", "-", $parsed["path"]);
-                    $name = ltrim($name, "-");
-                } else {
-                    $name = basename($adminJsPath);
-                }
+                $name = basename($adminJsPath);
                 $name = "cm-{$name}";
                 wp_register_script($name, $adminJsPath, array(), false, true);
                 wp_enqueue_script($name);
